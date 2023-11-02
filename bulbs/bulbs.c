@@ -1,0 +1,58 @@
+#include <cs50.h>
+#include <stdio.h>
+#include <string.h>
+
+const int BITS_IN_BYTE = 8;
+
+void print_bulb(int bit);
+
+int main(void)
+{
+    string input = get_string("Message: ");
+    int length = strlen(input);
+    for (int i = 0; i < length; i++)
+    {
+        int decimal = input[i];
+        char byte[BITS_IN_BYTE];
+        int pos = BITS_IN_BYTE - 1;//to set pointer to last block of array.
+        for (int j = 0; j < BITS_IN_BYTE; j++)//to fill in the array with 0s.
+        {
+            byte[j] = 0;
+        }
+        while (decimal > 0)
+        {
+            if (decimal % 2 == 1)
+            {
+                byte[pos] = 1;//insert one
+            }
+            pos--;//go forwards
+            decimal = decimal / 2;
+        }
+        for (int j = 0; j < BITS_IN_BYTE; j++)
+        {
+            if (byte[j] == 1)
+            {
+                print_bulb(1);
+            }
+            else
+            {
+                print_bulb(0);
+            }
+        }
+        printf("\n");
+    }
+}
+
+void print_bulb(int bit)
+{
+    if (bit == 0)
+    {
+        // Dark emoji
+        printf("\U000026AB");
+    }
+    else if (bit == 1)
+    {
+        // Light emoji
+        printf("\U0001F7E1");
+    }
+}
